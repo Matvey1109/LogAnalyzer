@@ -16,6 +16,7 @@ lint: ## Run linters in format mode
 	$(POETRY_RUN) black ./src ./tests
 	$(POETRY_RUN) ruff check ./src ./tests
 	$(POETRY_RUN) pytest --dead-fixtures --dup-fixtures
+	$(POETRY_RUN) isort .
 
 .PHONY: test
 test: ## Runs pytest with coverage
