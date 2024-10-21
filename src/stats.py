@@ -1,6 +1,5 @@
-from typing import Generator
 from collections import Counter
-
+from typing import Generator
 
 from log import Log
 

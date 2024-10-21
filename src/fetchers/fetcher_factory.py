@@ -1,6 +1,6 @@
+from fetchers.fetcher import Fetcher
 from fetchers.local_fetcher import LocalFetcher
 from fetchers.url_fetcher import URLFetcher
-from fetchers.fetcher import Fetcher
 
 
 class FetcherFactory:

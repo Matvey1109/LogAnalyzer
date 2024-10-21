@@ -2,8 +2,8 @@ from parser import Parser
 from typing import Generator
 from urllib.request import urlopen
 
-from log import Log
 from fetchers.fetcher import Fetcher
+from log import Log
 
 
 class URLFetcher(Fetcher):

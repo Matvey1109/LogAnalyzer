@@ -1,9 +1,9 @@
+from glob import glob
 from parser import Parser
 from typing import Generator
-from glob import glob
 
-from log import Log
 from fetchers.fetcher import Fetcher
+from log import Log
 
 
 class LocalFetcher(Fetcher):
