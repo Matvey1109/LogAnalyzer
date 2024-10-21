@@ -7,17 +7,18 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    # from readers.reader_factory import ReaderFactory
-    # from stats import Stats
+    from fetchers.fetcher_factory import FetcherFactory
+    from stats import Stats
 
-    # source = "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"
-    # reader = ReaderFactory.get_reader(source)
-    # gener = reader.read_logs()
+    source = "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"
+    # source = "src/test_logs/*.txt"
+    fetcher = FetcherFactory.get_fetcher(source)
+    gener = fetcher.fetch_logs()
 
-    # stats = Stats()
-    # stats.update_stats(gener)
-    # print(stats.get_stats())
-    logger.info(platform.python_version())
+    stats = Stats()
+    stats.update_stats(gener)
+    print(stats.get_stats())
+    # logger.info(platform.python_version())
 
 
 if __name__ == "__main__":
