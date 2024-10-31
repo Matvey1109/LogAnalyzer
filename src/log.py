@@ -11,6 +11,7 @@ class Log:
     remote_user: str
     time_local: str
     request: str
+    request_source: str
     status: int
     body_bytes_sent: int
     http_referer: str

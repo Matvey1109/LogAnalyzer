@@ -2,9 +2,19 @@ from collections import Counter
 from typing import Generator
 
 from log import Log
+from dataclasses import dataclass
 
 
-class Stats:
+@dataclass
+class StatsData:
+    total_requests: int
+    most_frequent_requested_sources: list[tuple[str, int]]
+    most_frequent_occurring_status_codes: list[tuple[str, int]]
+    avg_size_of_response: float
+    percentile_95th_of_response_size: float
+
+
+class StatsTracker:
     """
     A class to keep track of the stats of logs
     """
@@ -17,14 +27,16 @@ class Stats:
         self.status_codes: Counter = Counter()
 
     def update_stats(self, logs_generator: Generator[Log, None, None]):
+        """Update the statistics based on logs provided by the logs_generator"""
         for log in logs_generator:
             self.total_requests += 1
             self.total_response_size += log.body_bytes_sent
             self.response_sizes.append(log.body_bytes_sent)
-            self.request_sources[log.http_referer] += 1
+            self.request_sources[log.request_source] += 1
             self.status_codes[log.status] += 1
 
-    def get_percentile(self, data: list[int], percentile: float) -> float:
+    def calculate_percentile(self, data: list[int], percentile: float) -> float:
+        """Calculate the percentile value from the given data"""
         data.sort()
         index: float = (len(data) - 1) * percentile / 100
 
@@ -35,31 +47,37 @@ class Stats:
         upper: int = data[int(index) + 1]
         return lower + (upper - lower) * (index % 1)
 
-    def get_stats(self) -> str:
-        most_frequent_sources: list[tuple[str, int]] = self.request_sources.most_common(
-            3
-        )
-        most_frequent_status_codes: list[tuple[str, int]] = (
-            self.status_codes.most_common(3)
-        )
+    def get_most_frequent_sources(self, limit: int = 3) -> list[tuple[str, int]]:
+        """Get the most frequent request sources"""
+        return self.request_sources.most_common(limit)
 
-        avg_response_size: float = (
+    def get_most_frequent_status_codes(self, limit: int = 3) -> list[tuple[str, int]]:
+        """Get the most frequent status codes"""
+        return self.status_codes.most_common(limit)
+
+    def get_avg_response_size(self) -> float:
+        """Get the average response size"""
+        return (
             self.total_response_size / self.total_requests
             if self.total_requests > 0
-            else 0
+            else 0.0
         )
-        percentile_95: float = self.get_percentile(self.response_sizes, 95)
 
-        stats_str: str = f"Total requests: {self.total_requests}\n"
-        stats_str += "Most frequently requested sources:\n"
-        for source, count in most_frequent_sources:
-            stats_str += f"{source}: {count} requests\n"
+    def get_percentile_95th_response_size(self) -> float:
+        """Get the 95th percentile of the response size"""
+        return self.calculate_percentile(self.response_sizes, 95)
 
-        stats_str += "\nMost frequently occurring status codes:\n"
-        for status_code, count in most_frequent_status_codes:
-            stats_str += f"Status code {status_code}: {count} occurrences\n"
+    def get_stats_data(self) -> StatsData:
+        """Get the statistics data as a StatsData object"""
+        most_frequent_sources = self.get_most_frequent_sources()
+        most_frequent_status_codes = self.get_most_frequent_status_codes()
+        avg_response_size = self.get_avg_response_size()
+        percentile_95 = self.get_percentile_95th_response_size()
 
-        stats_str += f"\nAverage size of response: {avg_response_size:.2f} bytes\n"
-        stats_str += f"95th percentile of response size: {percentile_95:.2f} bytes\n"
-
-        return stats_str
+        return StatsData(
+            total_requests=self.total_requests,
+            most_frequent_requested_sources=most_frequent_sources,
+            most_frequent_occurring_status_codes=most_frequent_status_codes,
+            avg_size_of_response=avg_response_size,
+            percentile_95th_of_response_size=percentile_95,
+        )

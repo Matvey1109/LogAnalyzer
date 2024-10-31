@@ -15,6 +15,7 @@ class Parser:
             remote_user=parts[1],
             time_local=parts[3] + " " + parts[4],
             request=parts[5],
+            request_source=parts[6],
             status=int(parts[8]),
             body_bytes_sent=int(parts[9]),
             http_referer=parts[10],
