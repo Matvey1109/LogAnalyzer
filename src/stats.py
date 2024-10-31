@@ -1,8 +1,8 @@
 from collections import Counter
+from dataclasses import dataclass
 from typing import Generator
 
 from log import Log
-from dataclasses import dataclass
 
 
 @dataclass
