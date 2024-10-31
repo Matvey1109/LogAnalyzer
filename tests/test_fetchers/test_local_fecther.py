@@ -4,7 +4,8 @@ import pytest
 
 from src.fetchers.local_fetcher import LocalFetcher
 from src.log import Log
-from src.stats import StatsData, StatsTracker
+from src.stats.stats_data import StatsData
+from src.stats.stats_tracker import StatsTracker
 
 
 class TestLocalFetcher:

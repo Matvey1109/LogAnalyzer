@@ -1,21 +1,8 @@
 from collections import Counter
-from dataclasses import dataclass
 from typing import Generator
 
 from src.log import Log
-
-
-@dataclass
-class StatsData:
-    """
-    Dataclass representing a data fo stats
-    """
-
-    total_requests: int
-    most_frequent_requested_sources: list[tuple[str, int]]
-    most_frequent_occurring_status_codes: list[tuple[str, int]]
-    avg_size_of_response: float
-    percentile_95th_of_response_size: float
+from src.stats.stats_data import StatsData
 
 
 class StatsTracker:
@@ -29,10 +16,15 @@ class StatsTracker:
         self._response_sizes: list[int] = []
         self._request_sources: Counter = Counter()
         self._status_codes: Counter = Counter()
+        self._from_time: str | None = None
+        self._to_time: str | None = None
 
     def update_stats(
-        self, logs_generator: Generator[Log, None, None], from_time=None, to_time=None
-    ):
+        self,
+        logs_generator: Generator[Log, None, None],
+        from_time: str | None = None,
+        to_time: str | None = None,
+    ) -> None:
         """Update the statistics based on logs provided by the logs_generator within the specified time range"""
         for log in logs_generator:
             if from_time and log.time_local < from_time:
@@ -45,6 +37,8 @@ class StatsTracker:
             self._response_sizes.append(log.body_bytes_sent)
             self._request_sources[log.request_source] += 1
             self._status_codes[log.status] += 1
+            self._from_time = from_time
+            self._to_time = to_time
 
     def get_stats_data(self) -> StatsData:
         """Get the statistics data as a StatsData object"""
@@ -59,6 +53,8 @@ class StatsTracker:
             most_frequent_occurring_status_codes=most_frequent_status_codes,
             avg_size_of_response=avg_response_size,
             percentile_95th_of_response_size=percentile_95,
+            from_time=self._from_time,
+            to_time=self._to_time,
         )
 
     def _calculate_percentile(self, data: list[int], percentile: float) -> float:

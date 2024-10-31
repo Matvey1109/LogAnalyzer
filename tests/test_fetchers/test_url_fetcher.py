@@ -4,7 +4,8 @@ import pytest
 
 from src.fetchers.url_fetcher import URLFetcher
 from src.log import Log
-from src.stats import StatsData, StatsTracker
+from src.stats.stats_data import StatsData
+from src.stats.stats_tracker import StatsTracker
 
 
 class TestURLFetcher:
