@@ -1,6 +1,6 @@
-from fetchers.fetcher import Fetcher
-from fetchers.local_fetcher import LocalFetcher
-from fetchers.url_fetcher import URLFetcher
+from src.fetchers.fetcher import IFetcher
+from src.fetchers.local_fetcher import LocalFetcher
+from src.fetchers.url_fetcher import URLFetcher
 
 
 class FetcherFactory:
@@ -9,7 +9,7 @@ class FetcherFactory:
     """
 
     @staticmethod
-    def get_fetcher(source: str) -> Fetcher:
+    def get_fetcher(source: str) -> IFetcher:
         if source.startswith("http"):
             return URLFetcher(source)
         else:

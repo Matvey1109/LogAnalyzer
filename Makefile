@@ -21,3 +21,7 @@ lint: ## Run linters in format mode
 .PHONY: test
 test: ## Runs pytest with coverage
 	$(TEST) tests/ --cov=src --cov-report json --cov-report term --cov-report xml:cobertura.xml
+
+.PHONY: start
+start: ## Starts main.py
+	$(RUN) python src/main.py

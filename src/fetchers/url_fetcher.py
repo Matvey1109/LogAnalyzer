@@ -1,12 +1,12 @@
-from parser import Parser
 from typing import Generator
 from urllib.request import urlopen
 
-from fetchers.fetcher import Fetcher
-from log import Log
+from src.fetchers.fetcher import IFetcher
+from src.log import Log
+from src.log_parser import LogParser
 
 
-class URLFetcher(Fetcher):
+class URLFetcher(IFetcher):
     """
     Class for file fetching from a URL
     """
@@ -17,7 +17,7 @@ class URLFetcher(Fetcher):
 
     def fetch_logs(self) -> Generator[Log, None, None]:
         """Method to fetch logs from a source"""
-        response = urlopen(self.source)
+        response = urlopen(self._source)
         for line_bytes in response:
             line: str = line_bytes.decode("utf-8")
-            yield Parser.parse_line(line)
+            yield LogParser.parse_line(line)

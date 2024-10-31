@@ -1,12 +1,12 @@
 from glob import glob
-from parser import Parser
 from typing import Generator
 
-from fetchers.fetcher import Fetcher
-from log import Log
+from src.fetchers.fetcher import IFetcher
+from src.log import Log
+from src.log_parser import LogParser
 
 
-class LocalFetcher(Fetcher):
+class LocalFetcher(IFetcher):
     """
     Class for local file fetcher
     """
@@ -17,7 +17,7 @@ class LocalFetcher(Fetcher):
 
     def fetch_logs(self) -> Generator[Log, None, None]:
         """Method to fetch logs from a source"""
-        for file_path in glob(self.source, recursive=True):
+        for file_path in glob(self._source, recursive=True):
             with open(file_path, "r") as file:
                 for line in file:
-                    yield Parser.parse_line(line)
+                    yield LogParser.parse_line(line)

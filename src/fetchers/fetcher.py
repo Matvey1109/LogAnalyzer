@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Generator
 
-from log import Log
+from src.log import Log
 
 
-class Fetcher(ABC):
+class IFetcher(ABC):
     """
     Abstract class for fetching logs
     """
@@ -12,7 +12,7 @@ class Fetcher(ABC):
     def __init__(self, source: str) -> None:
         """Initialize the fetcher with a source"""
         super().__init__()
-        self.source: str = source
+        self._source: str = source
 
     @abstractmethod
     def fetch_logs(self) -> Generator[Log, None, None]:
