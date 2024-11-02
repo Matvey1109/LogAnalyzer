@@ -12,12 +12,12 @@ class LogParser:
         parts = line.split()
         return Log(
             remote_addr=parts[0],
-            remote_user=parts[1],
-            time_local=parts[3] + " " + parts[4],
-            request=parts[5],
+            remote_user=parts[2],
+            time_local=(parts[3] + " " + parts[4]).strip("[]"),
+            request=parts[5].strip('"'),
             request_source=parts[6],
             status=int(parts[8]),
             body_bytes_sent=int(parts[9]),
-            http_referer=parts[10],
-            http_user_agent=" ".join(parts[11:]),
+            http_referer=parts[10].strip('"'),
+            http_user_agent=" ".join(parts[11:]).strip('"'),
         )

@@ -1,6 +1,7 @@
 from collections import Counter
 from typing import Generator
 
+from src.constants import Constants
 from src.log import Log
 from src.stats.stats_data import StatsData
 
@@ -60,6 +61,9 @@ class StatsTracker:
     def _calculate_percentile(self, data: list[int], percentile: float) -> float:
         """Calculate the percentile value from the given data"""
         data.sort()
+        if data == []:
+            return 0.0
+
         index: float = (len(data) - 1) * percentile / 100
 
         if index.is_integer():
@@ -69,11 +73,15 @@ class StatsTracker:
         upper: int = data[int(index) + 1]
         return lower + (upper - lower) * (index % 1)
 
-    def _get_most_frequent_sources(self, limit: int = 3) -> list[tuple[str, int]]:
+    def _get_most_frequent_sources(
+        self, limit: int = Constants.LIMIT_OF_FREQUENCY.value
+    ) -> list[tuple[str, int]]:
         """Get the most frequent request sources"""
         return self._request_sources.most_common(limit)
 
-    def _get_most_frequent_status_codes(self, limit: int = 3) -> list[tuple[str, int]]:
+    def _get_most_frequent_status_codes(
+        self, limit: int = Constants.LIMIT_OF_FREQUENCY.value
+    ) -> list[tuple[str, int]]:
         """Get the most frequent status codes"""
         return self._status_codes.most_common(limit)
 

@@ -19,7 +19,6 @@ class TestLocalFetcher:
         stats = StatsTracker()
         stats.update_stats(generator)
         stats_data: StatsData = stats.get_stats_data()
-        print(stats_data)
         assert stats_data.total_requests == 51466
         assert stats_data.most_frequent_requested_sources == [
             ("/downloads/product_1", 30285),

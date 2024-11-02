@@ -3,7 +3,7 @@ from urllib.request import urlopen
 
 from src.fetchers.fetcher import IFetcher
 from src.log import Log
-from src.log_parser import LogParser
+from src.parsers.log_parser import LogParser
 
 
 class URLFetcher(IFetcher):

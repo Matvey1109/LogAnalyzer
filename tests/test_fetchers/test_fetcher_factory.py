@@ -19,6 +19,6 @@ from src.fetchers.url_fetcher import URLFetcher
         ),
     ],
 )
-def test_fetcher_factory(mock_input, expected_output):
+def test_fetcher_factory(mock_input: str, expected_output):
     fetcher: IFetcher = FetcherFactory.get_fetcher(mock_input)
     assert isinstance(fetcher, expected_output)
