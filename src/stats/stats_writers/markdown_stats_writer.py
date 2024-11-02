@@ -28,6 +28,10 @@ class MarkdownStatsWriter(IStatsWriter):
             for status, count in self._stats_data.most_frequent_occurring_status_codes:
                 file.write(f"| Status Code: {status} | Count: {count} |\n")
 
+            file.write("| Most Active Remote Addresses | \n")
+            for address, count in self._stats_data.most_active_remote_addrs:
+                file.write(f"| Address: {address} | Count: {count} |\n")
+
             file.write(
                 f"| Average Size of Response | {self._stats_data.avg_size_of_response} |\n"
             )
@@ -36,6 +40,7 @@ class MarkdownStatsWriter(IStatsWriter):
             )
             file.write(f"| From Time | {self._stats_data.from_time} |\n")
             file.write(f"| To Time | {self._stats_data.to_time} |\n")
+            file.write(f"| Filter Value | {self._stats_data.filter_value} |\n")
 
     def get_file_extension(self) -> str:
         """Method to get file extension"""

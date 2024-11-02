@@ -26,9 +26,14 @@ class TestLocalFetcher:
             ("/downloads/product_3", 73),
         ]
         assert stats_data.most_frequent_occurring_status_codes == [
-            (404, 33877),
-            (304, 13330),
-            (200, 4030),
+            ("404", 33877),
+            ("304", 13330),
+            ("200", 4030),
+        ]
+        assert stats_data.most_active_remote_addrs == [
+            ("216.46.173.126", 2350),
+            ("180.179.174.219", 1720),
+            ("204.77.168.241", 1439),
         ]
         assert stats_data.avg_size_of_response == 659458.3908211247
         assert stats_data.percentile_95th_of_response_size == 1768.0

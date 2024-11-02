@@ -10,9 +10,9 @@ class Log:
     remote_addr: str
     remote_user: str
     time_local: str
-    request: str
+    request_method: str
     request_source: str
-    status: int
-    body_bytes_sent: int
+    status: str
+    body_bytes_sent: str
     http_referer: str
     http_user_agent: str

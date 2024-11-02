@@ -28,9 +28,14 @@ class TestStatsTracker:
             ("/downloads/product_3", 73),
         ]
         assert stats_data.most_frequent_occurring_status_codes == [
-            (404, 33877),
-            (304, 13330),
-            (200, 4030),
+            ("404", 33877),
+            ("304", 13330),
+            ("200", 4030),
+        ]
+        assert stats_data.most_active_remote_addrs == [
+            ("216.46.173.126", 2350),
+            ("180.179.174.219", 1720),
+            ("204.77.168.241", 1439),
         ]
         assert stats_data.avg_size_of_response == 659458.3908211247
         assert stats_data.percentile_95th_of_response_size == 1768.0
@@ -72,5 +77,36 @@ class TestStatsTracker:
         stats_tracker.update_stats(
             logs_generator, from_time=from_time_log, to_time=to_time_log
         )
+        stats_data: StatsData = stats_tracker.get_stats_data()
+        assert stats_data.total_requests == expected_output
+
+    @pytest.mark.parametrize(
+        "mock_input, expected_output",
+        [
+            (
+                "404",
+                33878,
+            ),
+            (
+                "Chrome",
+                141,
+            ),
+            (
+                "GET",
+                51382,
+            ),
+            (
+                "168.0.1",
+                1,
+            ),
+        ],
+    )
+    def test_filtering_by_value(
+        self, mock_input: str, expected_output: int, stats_tracker: StatsTracker
+    ):
+        fetcher: LocalFetcher = LocalFetcher("tests/mock/*.txt")
+        logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
+
+        stats_tracker.update_stats(logs_generator, filter_value=mock_input)
         stats_data: StatsData = stats_tracker.get_stats_data()
         assert stats_data.total_requests == expected_output

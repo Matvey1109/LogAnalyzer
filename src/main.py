@@ -30,7 +30,7 @@ def main() -> None:
     # gener = fetcher.fetch_logs()
 
     # stats = StatsTracker()
-    # stats.update_stats(gener, from_time=from_time_log, to_time=to_time_log)
+    # stats.update_stats(gener, from_time=from_time_log, to_time=to_time_log, filter_value="16")
     # stats_data = stats.get_stats_data()
 
     # writer_type = StatsWriterType("markdownstatswriter")
