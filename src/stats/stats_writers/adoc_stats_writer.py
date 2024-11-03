@@ -51,6 +51,6 @@ class AdocStatsWriter(IStatsWriter):
 
             file.write("|===\n")
 
-    def get_file_extension(self) -> str:
+    def _get_file_extension(self) -> str:
         """Method to get file extension"""
         return ".adoc"

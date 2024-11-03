@@ -12,7 +12,7 @@ class IStatsWriter(ABC):
         """Initialize the writer with a stats_data and file_path"""
         super().__init__()
         self._stats_data: StatsData = stats_data
-        self._file_path: str = file_path + self.get_file_extension()
+        self._file_path: str = file_path + self._get_file_extension()
 
     @abstractmethod
     def write_stats_to_file(self) -> None:
@@ -20,6 +20,6 @@ class IStatsWriter(ABC):
         pass
 
     @abstractmethod
-    def get_file_extension(self) -> str:
+    def _get_file_extension(self) -> str:
         """Method to get file extension"""
         pass

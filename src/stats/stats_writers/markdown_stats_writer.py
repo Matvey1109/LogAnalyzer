@@ -49,6 +49,6 @@ class MarkdownStatsWriter(IStatsWriter):
             file.write(f"| Filter Field | {self._stats_data.filter_field} |\n")
             file.write(f"| Filter Value | {self._stats_data.filter_value} |\n")
 
-    def get_file_extension(self) -> str:
+    def _get_file_extension(self) -> str:
         """Method to get file extension"""
         return ".md"

@@ -85,7 +85,7 @@ class ArgParser:
             default=None,
         )
 
-        self._args = parser.parse_args()
+        self._args: argparse.Namespace = parser.parse_args()
 
     def get_program_vars(self) -> ProgramVars:
         """

@@ -12,7 +12,7 @@ class TestLocalFetcher:
     @pytest.fixture
     def local_fetcher(self) -> LocalFetcher:
         """Fixture to create a new LocalFetcher instance for each test"""
-        return LocalFetcher("tests/mock/*.txt")
+        return LocalFetcher("tests/mock_input/*.txt")
 
     def test_get_correct_data_from_local(self, local_fetcher: LocalFetcher):
         generator: Generator[Log, None, None] = local_fetcher.fetch_logs()

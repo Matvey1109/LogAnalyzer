@@ -16,7 +16,7 @@ class TestStatsTracker:
         return StatsTracker()
 
     def test_get_correct_stats_data(self, stats_tracker: StatsTracker):
-        fetcher: LocalFetcher = LocalFetcher("tests/mock/*.txt")
+        fetcher: LocalFetcher = LocalFetcher("tests/mock_input/*.txt")
         logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
         stats_tracker.update_stats(logs_generator)
         stats_data: StatsData = stats_tracker.get_stats_data()
@@ -67,7 +67,7 @@ class TestStatsTracker:
         expected_output: int,
         stats_tracker: StatsTracker,
     ):
-        fetcher: LocalFetcher = LocalFetcher("tests/mock/*.txt")
+        fetcher: LocalFetcher = LocalFetcher("tests/mock_input/*.txt")
         logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
 
         time_parser: TimeParser = TimeParser()
@@ -112,7 +112,7 @@ class TestStatsTracker:
         expected_output: int,
         stats_tracker: StatsTracker,
     ):
-        fetcher: LocalFetcher = LocalFetcher("tests/mock/*.txt")
+        fetcher: LocalFetcher = LocalFetcher("tests/mock_input/*.txt")
         logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
 
         stats_tracker.update_stats(

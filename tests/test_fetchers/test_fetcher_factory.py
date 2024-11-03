@@ -14,7 +14,7 @@ from src.fetchers.url_fetcher import URLFetcher
             URLFetcher,
         ),
         (
-            "tests/mock/*.txt",
+            "tests/mock_input/*.txt",
             LocalFetcher,
         ),
     ],
