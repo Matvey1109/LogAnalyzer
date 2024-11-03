@@ -81,32 +81,42 @@ class TestStatsTracker:
         assert stats_data.total_requests == expected_output
 
     @pytest.mark.parametrize(
-        "mock_input, expected_output",
+        "mock_input_field, mock_input_value, expected_output",
         [
             (
+                "status",
                 "404",
-                33878,
+                33877,
             ),
             (
+                "http_user_agent",
                 "Chrome",
                 141,
             ),
             (
+                "request_method",
                 "GET",
                 51382,
             ),
             (
+                "remote_addr",
                 "168.0.1",
                 1,
             ),
         ],
     )
     def test_filtering_by_value(
-        self, mock_input: str, expected_output: int, stats_tracker: StatsTracker
+        self,
+        mock_input_field: str,
+        mock_input_value: str,
+        expected_output: int,
+        stats_tracker: StatsTracker,
     ):
         fetcher: LocalFetcher = LocalFetcher("tests/mock/*.txt")
         logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
 
-        stats_tracker.update_stats(logs_generator, filter_value=mock_input)
+        stats_tracker.update_stats(
+            logs_generator, filter_field=mock_input_field, filter_value=mock_input_value
+        )
         stats_data: StatsData = stats_tracker.get_stats_data()
         assert stats_data.total_requests == expected_output

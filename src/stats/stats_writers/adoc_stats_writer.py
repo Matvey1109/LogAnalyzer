@@ -38,8 +38,15 @@ class AdocStatsWriter(IStatsWriter):
             file.write(
                 f"| 95th Percentile of Response Size | {self._stats_data.percentile_95th_of_response_size}\n"
             )
-            file.write(f"| From Time | {self._stats_data.from_time}\n")
-            file.write(f"| To Time | {self._stats_data.to_time}\n")
+
+            file.write("| Filtering | \n")
+            file.write(
+                f"| From Time | {self._stats_data.from_time if self._stats_data.from_time else None} |\n"
+            )
+            file.write(
+                f"| To Time | {self._stats_data.to_time if self._stats_data.to_time else None} |\n"
+            )
+            file.write(f"| Filter Field | {self._stats_data.filter_field} |\n")
             file.write(f"| Filter Value | {self._stats_data.filter_value} |\n")
 
             file.write("|===\n")

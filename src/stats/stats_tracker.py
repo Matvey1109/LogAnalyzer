@@ -20,6 +20,7 @@ class StatsTracker:
         self._remote_addrs: Counter = Counter()
         self._from_time: str | None = None
         self._to_time: str | None = None
+        self._filter_field: str | None = None
         self._filter_value: str | None = None
 
     def update_stats(
@@ -27,11 +28,14 @@ class StatsTracker:
         logs_generator: Generator[Log, None, None],
         from_time: str | None = None,
         to_time: str | None = None,
+        filter_field: str | None = None,
         filter_value: str | None = None,
     ) -> None:
         """Update the statistics based on logs provided by the logs_generator within the specified time range"""
         for log in logs_generator:
-            if self._is_log_filtered(log, from_time, to_time, filter_value):
+            if self._is_log_filtered(
+                log, from_time, to_time, filter_field, filter_value
+            ):
                 continue
 
             current_body_bytes_sent: int = int(log.body_bytes_sent)
@@ -44,6 +48,7 @@ class StatsTracker:
             self._remote_addrs[log.remote_addr] += 1
             self._from_time = from_time
             self._to_time = to_time
+            self._filter_field = filter_field
             self._filter_value = filter_value
 
     def get_stats_data(self) -> StatsData:
@@ -66,6 +71,7 @@ class StatsTracker:
             percentile_95th_of_response_size=percentile_95,
             from_time=self._from_time,
             to_time=self._to_time,
+            filter_field=self._filter_field,
             filter_value=self._filter_value,
             most_active_remote_addrs=most_active_remote_addrs,
         )
@@ -120,6 +126,7 @@ class StatsTracker:
         log: Log,
         from_time: str | None = None,
         to_time: str | None = None,
+        filter_field: str | None = None,
         filter_value: str | None = None,
     ) -> bool:
         """Filter logs by time range and by value"""
@@ -128,7 +135,12 @@ class StatsTracker:
         if to_time and log.time_local > to_time:
             return True
 
-        if not filter_value:
-            return False
+        if filter_field and filter_value:
+            try:
+                log_value: str = getattr(log, filter_field)
+            except AttributeError:
+                return False
 
-        return not any(filter_value in value for value in vars(log).values())
+            if filter_value not in log_value:
+                return True
+        return False
