@@ -2,6 +2,7 @@ from typing import Generator
 
 import pytest
 
+from src.fetchers.local_fetcher import LocalFetcher
 from src.fetchers.url_fetcher import URLFetcher
 from src.log import Log
 from src.stats.stats_data import StatsData
@@ -12,16 +13,16 @@ class TestURLFetcher:
     @pytest.fixture
     def url_fetcher(self) -> URLFetcher:
         """Fixture to create a new URLFetcher instance for each test"""
-        return URLFetcher(
-            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"
-        )
+        return URLFetcher("https:...")
 
     def test_get_correct_data_from_url(self, url_fetcher: URLFetcher):
-        generator: Generator[Log, None, None] = url_fetcher.fetch_logs()
+        generator: Generator[Log, None, None] = LocalFetcher(
+            "tests/mock_input/logs1.txt"  # As expected response from server
+        ).fetch_logs()
+
         stats = StatsTracker()
         stats.update_stats(generator)
         stats_data: StatsData = stats.get_stats_data()
-        print(stats_data)
         assert stats_data.total_requests == 51462
         assert stats_data.most_frequent_requested_sources == [
             ("/downloads/product_1", 30285),

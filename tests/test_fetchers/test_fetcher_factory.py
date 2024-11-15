@@ -10,7 +10,7 @@ from src.fetchers.url_fetcher import URLFetcher
     "mock_input, expected_output",
     [
         (
-            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs",
+            "https:...",
             URLFetcher,
         ),
         (

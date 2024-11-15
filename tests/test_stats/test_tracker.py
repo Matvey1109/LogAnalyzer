@@ -20,7 +20,6 @@ class TestStatsTracker:
         logs_generator: Generator[Log, None, None] = fetcher.fetch_logs()
         stats_tracker.update_stats(logs_generator)
         stats_data: StatsData = stats_tracker.get_stats_data()
-        print(stats_data)
         assert stats_data.total_requests == 51466
         assert stats_data.most_frequent_requested_sources == [
             ("/downloads/product_1", 30285),

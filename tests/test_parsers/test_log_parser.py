@@ -27,3 +27,4 @@ def test_parse_log_line():
     assert parsed_log.body_bytes_sent == expected_log.body_bytes_sent
     assert parsed_log.http_referer == expected_log.http_referer
     assert parsed_log.http_user_agent == expected_log.http_user_agent
+    assert parsed_log == expected_log

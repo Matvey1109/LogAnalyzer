@@ -18,17 +18,17 @@ def test_arg_parser(monkeypatch):
         [
             "test_arg_parser.py",
             "--path",
-            "/test/path",
+            test_args.path,
             "--from-time",
-            "2024-01-01T00:00:00",
+            test_args.from_time,
             "--to-time",
-            "2024-01-02T00:00:00",
+            test_args.to_time,
             "--format",
-            "markdown",
+            test_args.format,
             "--filter-field",
-            "status",
+            test_args.filter_field,
             "--filter-value",
-            "200",
+            test_args.filter_value,
         ],
     )
 

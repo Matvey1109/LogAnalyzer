@@ -1,4 +1,3 @@
-from src.stats.stats_data import StatsData
 from src.stats.stats_writers.stats_writer import IStatsWriter
 
 
@@ -7,13 +6,9 @@ class MarkdownStatsWriter(IStatsWriter):
     A class to write statistics data to a markdown file
     """
 
-    def __init__(self, stats_data: StatsData, file_path: str) -> None:
-        """Initialize the MarkdownStatsWriter"""
-        super().__init__(stats_data, file_path)
-
     def write_stats_to_file(self) -> None:
         """Method to write stats_data in a file"""
-        with open(self._file_path, "w") as file:
+        with self._file_path.open("w") as file:
             file.write("## Logs Stats Data\n\n")
             file.write("| Statistic | Value |\n")
             file.write("| --- | --- |\n")

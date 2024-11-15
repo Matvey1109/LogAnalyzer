@@ -33,7 +33,7 @@ class StatsTracker:
     ) -> None:
         """Update the statistics based on logs provided by the logs_generator within the specified time range"""
         for log in logs_generator:
-            if self._is_log_filtered(
+            if self._does_log_fit_filter_criteria(
                 log, from_time, to_time, filter_field, filter_value
             ):
                 continue
@@ -121,7 +121,7 @@ class StatsTracker:
         """Get the 95th percentile of the response size"""
         return self._calculate_percentile(self._response_sizes, 95)
 
-    def _is_log_filtered(
+    def _does_log_fit_filter_criteria(
         self,
         log: Log,
         from_time: str | None = None,
@@ -137,6 +137,12 @@ class StatsTracker:
 
         if filter_field and filter_value:
             try:
+                available_filter_fields = Log.__annotations__.keys()
+                if filter_field not in available_filter_fields:
+                    raise ValueError(
+                        f"Filter field '{filter_field}' is not available in the log."
+                    )
+
                 log_value: str = getattr(log, filter_field)
             except AttributeError:
                 return False

@@ -11,10 +11,6 @@ class URLFetcher(IFetcher):
     Class for file fetching from a URL
     """
 
-    def __init__(self, source: str) -> None:
-        """Initialize the URLFetcher with a source"""
-        super().__init__(source)
-
     def fetch_logs(self) -> Generator[Log, None, None]:
         """Method to fetch logs from a source"""
         response = urlopen(self._source)

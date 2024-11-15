@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from pathlib import Path
 
 from src.stats.stats_data import StatsData
 
@@ -12,7 +13,10 @@ class IStatsWriter(ABC):
         """Initialize the writer with a stats_data and file_path"""
         super().__init__()
         self._stats_data: StatsData = stats_data
-        self._file_path: str = file_path + self._get_file_extension()
+
+        path = Path(file_path + self._get_file_extension())
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self._file_path: Path = path
 
     @abstractmethod
     def write_stats_to_file(self) -> None:

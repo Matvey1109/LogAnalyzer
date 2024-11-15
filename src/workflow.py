@@ -19,8 +19,8 @@ def workflow():
     program_vars: ProgramVars = arg_parser.get_program_vars()
 
     time_parser: TimeParser = TimeParser()
-    from_time_log: str = ""
-    to_time_log: str = ""
+    from_time_log: str | None = None
+    to_time_log: str | None = None
 
     if program_vars.from_time:
         from_time_log: str = time_parser.convert_iso_to_log_format(

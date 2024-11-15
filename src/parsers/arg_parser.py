@@ -92,7 +92,7 @@ class ArgParser:
         Returns the program variables
         """
 
-        if not self._args.format:
+        if self._args.format is None:
             self._args.format = "markdown"
 
         return ProgramVars(

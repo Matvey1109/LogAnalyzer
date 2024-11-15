@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import pytest
 
@@ -40,12 +41,11 @@ class TestMarkdownStatsWriter:
     def test_correct_output_in_file(self, markdown_stats_writer: MarkdownStatsWriter):
         markdown_stats_writer.write_stats_to_file()
 
-        modified_file_path: str = markdown_stats_writer._file_path
+        modified_file_path: Path = markdown_stats_writer._file_path
         assert os.path.exists(modified_file_path)
 
         with open(modified_file_path, "r") as file:
             content = file.read()
-            print(content)
             assert "22914" in content
             assert "Most Frequent Requested Sources" in content
             assert "Most Frequent Occurring Status Codes" in content
