@@ -1,9 +1,9 @@
 import argparse
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 
-class CLIArgs(Enum):
+class CLIArgs(StrEnum):
     """
     A class to hold the command line arguments
     """

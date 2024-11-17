@@ -14,9 +14,8 @@ class IStatsWriter(ABC):
         super().__init__()
         self._stats_data: StatsData = stats_data
 
-        path = Path(file_path + self._get_file_extension())
-        path.parent.mkdir(parents=True, exist_ok=True)
-        self._file_path: Path = path
+        self._file_path = Path(file_path + self._get_file_extension())
+        self._file_path.parent.mkdir(parents=True, exist_ok=True)
 
     @abstractmethod
     def write_stats_to_file(self) -> None:

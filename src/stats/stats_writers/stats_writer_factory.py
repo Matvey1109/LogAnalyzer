@@ -1,6 +1,6 @@
 from enum import StrEnum, auto
 
-from src.constants import Constants
+from src.constants import FILE_NAME, STATS_FOLDER
 from src.stats.stats_data import StatsData
 from src.stats.stats_writers.adoc_stats_writer import AdocStatsWriter
 from src.stats.stats_writers.markdown_stats_writer import MarkdownStatsWriter
@@ -25,8 +25,8 @@ class StatsWriterFactory:
     def get_stats_writer(
         stats_writer_type: StatsWriterType,
         stats_data: StatsData,
-        folder_name: str = Constants.STATS_FOLDER.value,
-        file_name: str = Constants.FILE_NAME.value,
+        folder_name: str = STATS_FOLDER,
+        file_name: str = FILE_NAME,
     ) -> IStatsWriter:
         file_path: str = f"{folder_name}/{file_name}"
 

@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import Generator
 
-from src.constants import Constants
+from src.constants import LIMIT_OF_FREQUENCY
 from src.log import Log
 from src.stats.stats_data import StatsData
 
@@ -92,19 +92,19 @@ class StatsTracker:
         return lower + (upper - lower) * (index % 1)
 
     def _get_most_frequent_sources(
-        self, limit: int = Constants.LIMIT_OF_FREQUENCY.value
+        self, limit: int = LIMIT_OF_FREQUENCY
     ) -> list[tuple[str, int]]:
         """Get the most frequent request sources"""
         return self._request_sources.most_common(limit)
 
     def _get_most_frequent_status_codes(
-        self, limit: int = Constants.LIMIT_OF_FREQUENCY.value
+        self, limit: int = LIMIT_OF_FREQUENCY
     ) -> list[tuple[str, int]]:
         """Get the most frequent status codes"""
         return self._status_codes.most_common(limit)
 
     def _get_most_active_remote_addrs(
-        self, limit: int = Constants.LIMIT_OF_FREQUENCY.value
+        self, limit: int = LIMIT_OF_FREQUENCY
     ) -> list[tuple[str, int]]:
         """Get the most active remote addresses"""
         return self._remote_addrs.most_common(limit)
@@ -130,9 +130,9 @@ class StatsTracker:
         filter_value: str | None = None,
     ) -> bool:
         """Filter logs by time range and by value"""
-        if from_time and log.time_local < from_time:
+        if from_time is not None and log.time_local < from_time:
             return True
-        if to_time and log.time_local > to_time:
+        if to_time is not None and log.time_local > to_time:
             return True
 
         if filter_field and filter_value:

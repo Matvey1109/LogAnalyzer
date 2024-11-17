@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from src.constants import Constants
+from src.constants import LOG_FORMAT
 
 
 class TimeParser:
@@ -10,7 +10,7 @@ class TimeParser:
 
     def __init__(
         self,
-        log_format: str = Constants.LOG_FORMAT.value,
+        log_format: str = LOG_FORMAT,
     ) -> None:
         self._log_format: str = log_format
 

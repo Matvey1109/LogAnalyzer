@@ -17,14 +17,4 @@ def test_parse_log_line():
     )
 
     parsed_log = LogParser.parse_line(log_line)
-
-    assert parsed_log.remote_addr == expected_log.remote_addr
-    assert parsed_log.remote_user == expected_log.remote_user
-    assert parsed_log.time_local == expected_log.time_local
-    assert parsed_log.request_method == expected_log.request_method
-    assert parsed_log.request_source == expected_log.request_source
-    assert parsed_log.status == expected_log.status
-    assert parsed_log.body_bytes_sent == expected_log.body_bytes_sent
-    assert parsed_log.http_referer == expected_log.http_referer
-    assert parsed_log.http_user_agent == expected_log.http_user_agent
     assert parsed_log == expected_log
