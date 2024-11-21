@@ -1,0 +1,2 @@
+PYTHONPATH=$PWD python src/main.py --path https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs --format adoc --filter-value 200 --filter-field status
+PYTHONPATH=$PWD python src/main.py --path https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs --format markdown --from-time 20150523 --to-time 20150531
