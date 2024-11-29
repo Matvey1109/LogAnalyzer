@@ -1,5 +1,6 @@
 # Simple version of SAGE (T-Bank)
-https://www.tbank.ru/career/technologies/sage/
+- https://www.tbank.ru/career/technologies/sage/
+- https://www.tbank.ru/software/sage/
 
 ## Описание
 Лог-файлы являются важной частью работы любого сервера, так как они содержат информацию о том, какие запросы были отправлены на сервер, какие ошибки возникли и какие действия были выполнены.
